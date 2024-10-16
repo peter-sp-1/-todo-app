@@ -4,21 +4,21 @@ calculation = ""
 
 def add_to_calculation(symbol):
     global calculation
-    calculation += str(symbol)
-    text_result.delete(1.0, "end")
-    text_result.insert(1.0, calculation)
+    if symbol == "^":
+        calculation += "**"
+    else:
+        calculation += str(symbol)
+        text_result.delete(1.0, "end")
+        text_result.insert(1.0, calculation.replace("**", "^"))
+        
 
 def evaluate_calculation():
     global calculation
-    try:
-        calculation = calculation.replace("^", "**")
-        calculation = str(eval(calculation))
-        text_result.delete(1.0, "end")
-        text_result.insert(1.0, calculation)
-        
-    except:
-        clear_field()
-        text_result.insert(1.0, "Error")
+    calculation = str(eval(calculation))
+    text_result.delete(1.0, "end")  
+    text_result.insert("end", calculation)
+    calculation = ""
+    
 
 def clear_field():
     global calculation
